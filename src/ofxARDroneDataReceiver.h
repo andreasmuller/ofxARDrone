@@ -52,7 +52,8 @@ namespace ofxARDrone {
         msa::HistoryT<string> commandHistory;
         
         void sendDummyPacket();
-
+		void sendInitiateNavDataPacket();
+		
     protected:
         Drone *drone;
         ofxUDPManager udpReceiver;

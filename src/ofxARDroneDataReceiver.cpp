@@ -44,10 +44,17 @@ namespace ofxARDrone {
     
     //--------------------------------------------------------------
     void DataReceiver::sendDummyPacket() {
+		//ofLogVerbose("ofxARDrone::DataReceiver::sendDummyPacket");
         int i = 1;
         udpSender.Send((const char*)&i, 4);
     }
-    
+	
+	//--------------------------------------------------------------
+    void DataReceiver::sendInitiateNavDataPacket() {
+		ofLogVerbose("ofxARDrone::DataReceiver::sendInitiateNavDataPacket");
+		unsigned char tmpCmdBytes[4] = {0x01, 0x00, 0x00, 0x00};
+		udpSender.Send((const char*)tmpCmdBytes, 4);
+	}
     
     //--------------------------------------------------------------
     void DataReceiver::close() {
@@ -62,7 +69,7 @@ namespace ofxARDrone {
         udpReceiver.Receive(udpMessage, 65535);
         string message=udpMessage;
         if(message != "") {
-            printf("sdfdf");
+			ofLogVerbose() << "ofxARDrone::DataReceiver::update " << message << endl;
             commandHistory.push_front(message);
         } else {
             sendDummyPacket();
